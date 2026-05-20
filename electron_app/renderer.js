@@ -224,6 +224,21 @@ function releaseConnection(disconnectLog, keepAliveLog) {
   disconnectDevice(disconnectLog);
 }
 
+async function finishRefreshConnection() {
+  const shouldReconnect = shouldKeepConnectionAlive();
+  disconnectDevice("刷新保护结束，已断开");
+  if (!shouldReconnect || !bleDevice) return;
+  addLog("正在恢复自动待机连接");
+  await sleep(2000);
+  try {
+    await connectGatt({ retries: CONNECT_RETRY_COUNT });
+    setStatus(`已连接 ${bleDevice.name || "EPD"}，自动待机`);
+    addLog("自动待机连接已恢复");
+  } catch (err) {
+    addLog(`自动待机重连失败: ${err.message}`);
+  }
+}
+
 function clearGattState() {
   epdCharacteristic = null;
   gattServer = null;
@@ -765,11 +780,11 @@ async function refreshNow(options = {}) {
     lastSentSignature = signature;
     localStorage.setItem("codexEpdLastSignature", signature);
     setStatus("刷新中，请等待");
-    addLog(`发送完成，等待屏幕刷新，${Math.round(REFRESH_SETTLE_MS / 1000)}s 后${shouldKeepConnectionAlive() ? "进入待机" : "断开"}`);
+    addLog(`发送完成，等待屏幕刷新，${Math.round(REFRESH_SETTLE_MS / 1000)}s 后断开${shouldKeepConnectionAlive() ? "并恢复待机" : ""}`);
     await sleep(REFRESH_SETTLE_MS);
   } finally {
     if (refreshCommandSent) {
-      releaseConnection("刷新保护结束，已断开", "刷新保护结束，保持蓝牙连接");
+      await finishRefreshConnection();
     } else if (connectionOpened) {
       releaseConnection("本次刷新未完成，已断开", "本次刷新未完成，保持蓝牙连接");
     } else {
