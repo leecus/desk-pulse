@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Desk Pulse</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div>
+        <h1>Desk Pulse</h1>
+        <p>Web Bluetooth desk panel for EPD-nRF5 displays</p>
+      </div>
+      <button id="hideBtn" class="secondary">隐藏</button>
+    </header>
+
+    <section class="panel controls">
+      <button id="connectBtn">授权设备</button>
+      <button id="refreshBtn" class="secondary">立即刷新</button>
+      <button id="autoBtn" class="secondary">启动自动刷新</button>
+      <span id="status">未授权</span>
+    </section>
+
+    <section class="panel grid">
+      <label>5h 剩余 <input id="codex5hLeft" type="number" value="84"></label>
+      <label>5h 重置 <input id="codex5hReset" type="text" value="14:32"></label>
+      <label>Weekly 剩余 <input id="codexWeeklyLeft" type="number" value="98"></label>
+      <label>Weekly 重置 <input id="codexWeeklyReset" type="text" value="25 May"></label>
+      <label>Token <input id="codexTokenUsed" type="number" value=""></label>
+      <label>BLE 设备 <input id="targetDeviceName" type="text" value="" placeholder="NRF_EPD_A4A2"></label>
+      <label>间隔秒 <input id="autoRefreshInterval" type="number" value="1800"></label>
+      <label>开始 <input id="workStartHour" type="number" value="9"></label>
+      <label>结束 <input id="workEndHour" type="number" value="20"></label>
+      <label>上海天气 <input id="weatherText" type="text" value="Shanghai --"></label>
+      <label>电量 <input id="batteryText" type="text" value="EPD --%"></label>
+      <label class="wide">待办事项 <textarea id="todoText" rows="3" placeholder="每行一条待办"></textarea></label>
+      <label class="check"><input id="skipWeekends" type="checkbox" checked> 周末跳过</label>
+      <label class="check"><input id="smartRefreshEnabled" type="checkbox" checked> 仅变化刷新</label>
+    </section>
+
+    <section class="preview">
+      <canvas id="canvas" width="400" height="300"></canvas>
+    </section>
+
+    <section class="panel log" id="log"></section>
+
+    <input id="mtusize" type="hidden" value="244">
+    <input id="interleavedcount" type="hidden" value="50">
+    <select id="ditherMode" hidden><option value="threeColor" selected>threeColor</option></select>
+    <select id="canvasSize" hidden><option value="4.2_400_300" selected>4.2</option></select>
+    <select id="epddriver" hidden><option value="02" data-color="threeColor" data-size="4.2_400_300" selected>SSD1619</option></select>
+  </main>
+
+  <script src="../lib/dithering.js"></script>
+  <script src="renderer.js"></script>
+</body>
+</html>

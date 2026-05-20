@@ -1,0 +1,9 @@
+node_modules/
+.venv/
+.run/
+__pycache__/
+*.pyc
+*.log
+.DS_Store
+codex_dashboard.png
+state.json

@@ -1,0 +1,17 @@
+{
+  "name": "desk-pulse",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Terminal-style e-paper desk dashboard powered by Electron and Web Bluetooth.",
+  "main": "electron_app/main.js",
+  "scripts": {
+    "start": "electron electron_app",
+    "check": "node --check electron_app/main.js && node --check electron_app/preload.js && node --check electron_app/renderer.js",
+    "desk:start": "scripts/start_desk_pulse.sh",
+    "desk:stop": "scripts/stop_desk_pulse.sh",
+    "desk:status": "scripts/status_desk_pulse.sh"
+  },
+  "devDependencies": {
+    "electron": "^31.7.7"
+  }
+}
