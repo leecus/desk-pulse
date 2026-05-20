@@ -7,9 +7,9 @@
   "scripts": {
     "start": "electron electron_app",
     "check": "node --check electron_app/main.js && node --check electron_app/preload.js && node --check electron_app/renderer.js",
-    "desk:start": "scripts/start_desk_pulse.sh",
-    "desk:stop": "scripts/stop_desk_pulse.sh",
-    "desk:status": "scripts/status_desk_pulse.sh"
+    "desk:start": "node scripts/run.js start",
+    "desk:stop": "node scripts/run.js stop",
+    "desk:status": "node scripts/run.js status"
   },
   "devDependencies": {
     "electron": "^31.7.7"

@@ -6,7 +6,7 @@ Desk Pulse is an Electron + Web Bluetooth client that renders a 400x300 black/re
 
 ## Features
 
-- Menu bar Electron app
+- Menu bar Electron app (cross-platform: macOS / Windows / Linux)
 - Web Bluetooth image transfer
 - Terminal/ASCII inspired e-paper layout
 - Bitmap ASCII font with Chinese fallback rendering
@@ -34,6 +34,13 @@ python3 -m venv .venv
 .venv/bin/pip install -r providers/requirements.txt
 ```
 
+On Windows:
+```powershell
+npm install
+python -m venv .venv
+.venv\Scripts\pip install -r providers\requirements.txt
+```
+
 ## Run
 
 ```bash
@@ -43,9 +50,24 @@ npm start
 Or run in the background:
 
 ```bash
-scripts/start_desk_pulse.sh
+# macOS / Linux
+node scripts/run.js start
+node scripts/run.js status
+node scripts/run.js stop
+```
+
+Or directly:
+```bash
+scripts/start_desk_pulse.sh    # Unix
 scripts/status_desk_pulse.sh
 scripts/stop_desk_pulse.sh
+```
+
+```powershell
+# Windows
+scripts\start_desk_pulse.ps1
+scripts\status_desk_pulse.ps1
+scripts\stop_desk_pulse.ps1
 ```
 
 ## Configuration
@@ -63,7 +85,13 @@ Open the app and set:
 You can also set the initial BLE target via:
 
 ```bash
+# macOS / Linux
 DESK_PULSE_DEVICE=NRF_EPD_A4A2 npm start
+```
+
+```powershell
+# Windows
+$env:DESK_PULSE_DEVICE="NRF_EPD_A4A2"; npm start
 ```
 
 ## Privacy

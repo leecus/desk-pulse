@@ -7,8 +7,10 @@ const path = require("path");
 
 const APP_ROOT = __dirname;
 const PROJECT_ROOT = path.resolve(APP_ROOT, "..");
-const VENV_PYTHON = path.join(PROJECT_ROOT, ".venv", "bin", "python");
-const PYTHON = process.env.PYTHON || (fs.existsSync(VENV_PYTHON) ? VENV_PYTHON : "python3");
+const IS_WIN = process.platform === "win32";
+const VENV_PYTHON = path.join(PROJECT_ROOT, ".venv", IS_WIN ? "Scripts" : "bin", IS_WIN ? "python.exe" : "python");
+const FALLBACK_PYTHON = IS_WIN ? "python" : "python3";
+const PYTHON = process.env.PYTHON || (fs.existsSync(VENV_PYTHON) ? VENV_PYTHON : FALLBACK_PYTHON);
 const SCRIPT = path.join(PROJECT_ROOT, "providers", "codex_usage_dashboard.py");
 const DEFAULT_TARGET_DEVICE_NAME = "";
 let targetDeviceName = process.env.DESK_PULSE_DEVICE || DEFAULT_TARGET_DEVICE_NAME;
